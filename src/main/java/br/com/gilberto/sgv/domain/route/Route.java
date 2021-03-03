@@ -35,12 +35,12 @@ public class Route  implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "institution_id_seq", sequenceName = "institution_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "institution_id_seq")
+	@SequenceGenerator(name = "route_id_seq", sequenceName = "route_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_id_seq")
 	private Long id;
 	
 	@Column(name = "DESCRIPTION", nullable = false)
-	private String name;
+	private String description;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "PERIOD", nullable = false)

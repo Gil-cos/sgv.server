@@ -17,7 +17,7 @@ services:
       POSTGRES_PASSWORD: sgv
       POSTGRES_DB: sgv
     volumes:
-      - database-data:/var/lib/postgresql/data/
+      - sgv-database-data:/var/lib/postgresql/data/
 
 volumes:
   sgv-database-data:
