@@ -1,0 +1,35 @@
+server:
+  port: 8090
+spring:
+  mvc:
+    async:
+      request-timeout: 120000
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sgv
+    username: sre
+    password: sre
+    driverClassName: org.postgresql.Driver
+    hikari:
+      idle-timeout: 10000
+      maximum-pool-size: 10
+
+  liquibase:
+    change-log: classpath:db/changelog-master/db.changelog-master.xml
+    enabled: false
+
+  jpa:
+    repositories:
+      enabled: true
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: false
+    hibernate:
+      format_sql: false
+      ddl-auto: none
+    generate-ddl: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
