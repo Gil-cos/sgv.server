@@ -24,14 +24,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "SGV_PASSANGER")
-public class Passanger extends User implements Serializable {
+@Table(name = "SGV_PASSANGER_INFO")
+public class PassangerInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "passanger_id_seq", sequenceName = "passanger_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passanger_id_seq")
+	@SequenceGenerator(name = "passanger_info_id_seq", sequenceName = "passanger_info_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passanger_info_id_seq")
 	private Long id;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -41,6 +41,5 @@ public class Passanger extends User implements Serializable {
 	@ManyToMany(mappedBy="passangers")
 	private final Set<Route> routes = new HashSet<>();
 
-	
-	
 }
+

@@ -20,8 +20,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
-import br.com.gilberto.sgv.domain.user.Driver;
-import br.com.gilberto.sgv.domain.user.Passanger;
+import br.com.gilberto.sgv.domain.user.DriverInfo;
+import br.com.gilberto.sgv.domain.user.PassangerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,25 +48,25 @@ public class Route  implements Serializable {
 	
 	@ManyToOne()
 	@JoinColumn(name = "DRIVER", nullable = false)
-	private Driver driver;
+	private DriverInfo driver;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "SGV_ROUTE_PASSANGER", joinColumns = {
 			@JoinColumn(name = "ID_ROUTE", nullable = false, referencedColumnName = "ID")}, inverseJoinColumns = {
 			@JoinColumn(name = "ID_PASSAGER", nullable = false, referencedColumnName = "ID")})
-	private final Set<Passanger> passangers = new HashSet<>();
+	private final Set<PassangerInfo> passangers = new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "INSTITUTION", nullable = false)
 	private Institution institution;
 	
 	
-	public void addPassanger(final Passanger passanger) {
+	public void addPassanger(final PassangerInfo passanger) {
 		this.passangers.add(passanger);
 		passanger.getRoutes().add(this);
 	}
 	
-	public void removePassanger(final Passanger passanger) {
+	public void removePassanger(final PassangerInfo passanger) {
 		this.passangers.remove(passanger);
 		passanger.getRoutes().remove(this);
 	}

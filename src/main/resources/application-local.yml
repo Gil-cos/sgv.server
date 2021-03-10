@@ -6,8 +6,8 @@ spring:
       request-timeout: 120000
   datasource:
     url: jdbc:postgresql://localhost:5432/sgv
-    username: sre
-    password: sre
+    username: sgv
+    password: sgv
     driverClassName: org.postgresql.Driver
     hikari:
       idle-timeout: 10000

@@ -26,19 +26,39 @@ public class Address implements Serializable {
 	@SequenceGenerator(name = "address_id_seq", sequenceName = "address_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_id_seq")
 	private Long id;
-	
+
 	@Column(name = "CEP", nullable = false)
 	private String cep;
-	
+
 	@Column(name = "STREET", nullable = false)
 	private String street;
-	
+
 	@Column(name = "NEIGHBORHOOD", nullable = false)
 	private String neighborhood;
-	
+
 	@Column(name = "CITY", nullable = false)
 	private String city;
-	
+
 	@Column(name = "NUMBER", nullable = false)
 	private String number;
+
+	public Address(final String cep, final String street, final String neighborhood, final String city,
+			final String number) {
+		this.cep = cep;
+		this.street = street;
+		this.neighborhood = neighborhood;
+		this.city = city;
+		this.number = number;
+	}
+
+	public Address update(final String cep, final String street, final String neighborhood, final String city,
+			final String number) {
+		this.cep = cep;
+		this.street = street;
+		this.neighborhood = neighborhood;
+		this.city = city;
+		this.number = number;
+		return this;
+	}
+
 }
