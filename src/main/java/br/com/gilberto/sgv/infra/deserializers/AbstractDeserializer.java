@@ -40,6 +40,13 @@ public abstract class AbstractDeserializer<T> extends JsonDeserializer<T> {
 		}
 		return null;
 	}
+	
+	protected Integer getAsInteger(final String field, final JsonNode node) {
+		if (node.has(field)) {
+			return node.get(field).asInt();
+		}
+		return null;
+	}
 
 	protected JsonNode getAsJsonNode(final String field, final JsonNode node) {
 		if (node.has(field)) {

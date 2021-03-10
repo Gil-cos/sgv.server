@@ -38,4 +38,19 @@ public class Vehicle implements Serializable {
 
 	@Column(name = "NUMBER_OF_SEATS", nullable = false)
 	private Integer numberOfSeats;
+
+	public Vehicle(final String brand, final String model, final String licensePlate, final Integer numberOfSeats) {
+		this.brand = brand;
+		this.model = model;
+		this.licensePlate = licensePlate;
+		this.numberOfSeats = numberOfSeats;
+	}
+	
+	public Vehicle update(final String brand, final String model, final String licensePlate, final Integer numberOfSeats) {
+		this.brand = brand;
+		this.model = model;
+		this.licensePlate = licensePlate;
+		this.numberOfSeats = numberOfSeats;
+		return this;
+	}
 }

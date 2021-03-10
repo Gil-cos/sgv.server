@@ -10,9 +10,11 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.com.gilberto.sgv.domain.address.Address;
+import br.com.gilberto.sgv.domain.user.DriverInfo;
 import br.com.gilberto.sgv.domain.user.Role;
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.UserRepository;
+import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
 import br.com.gilberto.sgv.infra.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -21,21 +23,23 @@ import lombok.AllArgsConstructor;
 public class UserDeserializer extends AbstractDeserializer<User> {
 
 	private final UserRepository userRepository;
-	private final AddressDeserializer addressDeserializer;
 	private final PasswordEncoder passwordEncoder;
-	
+	private final AddressDeserializer addressDeserializer;
+	private final PassangerInfoDeserializer passangerInfoDeserializer;
+	private final DriverInfoDeserializer driverInfoDeserializer;
+
 	@Override
 	public User deserializeNode(final JsonNode jsonNode, final DeserializationContext deserializationContext)
 			throws IOException, NotFoundException {
-		return userRepository.findById(getId(jsonNode))
-				.orElseThrow(() -> new NotFoundException("User not found"));
+		return userRepository.findById(getId(jsonNode)).orElseThrow(() -> new NotFoundException("User not found"));
 	}
 
 	@Override
-	public User deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext) throws IOException {
+	public User deserialize(final JsonParser jsonParser, final DeserializationContext deserializationContext)
+			throws IOException {
 
 		JsonNode node = getJsonNode(jsonParser);
-		
+
 		final String name = getAsString("name", node);
 		final String phone = getAsString("phone", node);
 		final String cpf = getAsString("cpf", node);
@@ -43,19 +47,21 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		final String password = encodePassword(getAsString("password", node));
 		final Address address = addressDeserializer.deserialize(node.get("address"));
 		final Role role = Role.valueOf(getAsString("role", node));
-		
+		final PassangerInfo passangerInfo = passangerInfoDeserializer.deserialize(node.get("passangerInfo"));
+		final DriverInfo driverInfo = driverInfoDeserializer.deserialize(node.get("driverInfo"));
+
 		if (getId(node) == null) {
 			return new User(name, phone, cpf, email, password, address, role);
 		}
-		
+
 		final User user = userRepository.findById(getId(node))
 				.orElseThrow(() -> new NotFoundException("User not found"));
-		
-		return user.update(name, phone, cpf, address);
+
+		return user.update(name, phone, cpf, address, passangerInfo, driverInfo);
 	}
-	
+
 	private String encodePassword(final String password) {
-		return passwordEncoder.encode(password);
+		return password != null ? passwordEncoder.encode(password) : password;
 	}
 
 }

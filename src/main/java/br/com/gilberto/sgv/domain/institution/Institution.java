@@ -37,4 +37,15 @@ public class Institution implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS", nullable = false)
 	private Address address;
+	
+	public Institution(final String name, final Address address) {
+		this.name = name;
+		this.address = address;
+	}
+
+	public Institution update(final String name, final Address address) {
+		this.name = name;
+		this.address = address;
+		return this;
+	}
 }

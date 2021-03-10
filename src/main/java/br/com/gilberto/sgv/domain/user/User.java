@@ -22,6 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.gilberto.sgv.domain.address.Address;
+import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,22 +39,22 @@ public class User implements Serializable, UserDetails {
 	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
 	private Long id;
-	
+
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
 	@Column(name = "PHONE", nullable = false)
 	private String phone;
-	
+
 	@Column(name = "CPF", nullable = false)
 	private String cpf;
 
 	@Column(name = "EMAIL", nullable = false)
 	private String email;
-	
+
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS", nullable = false)
 	private Address address;
@@ -61,17 +62,17 @@ public class User implements Serializable, UserDetails {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PASSANGER_INFO", nullable = true)
 	private PassangerInfo passangerInfo;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "DRIVER_INFO", nullable = true)
 	private DriverInfo driverInfo;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLE", nullable = false)
 	private Role role;
 
-	public User(final String name, final String phone, final String cpf, final String email, final String password, final Address address,
-			final Role role) {
+	public User(final String name, final String phone, final String cpf, final String email, final String password,
+			final Address address, final Role role) {
 		this.name = name;
 		this.phone = phone;
 		this.cpf = cpf;
@@ -81,11 +82,14 @@ public class User implements Serializable, UserDetails {
 		this.role = role;
 	}
 
-	public User update(final String name, final String phone, final String cpf, final Address address) {
+	public User update(final String name, final String phone, final String cpf, final Address address,
+			final PassangerInfo passangerInfo, final DriverInfo driverInfo) {
 		this.name = name;
 		this.phone = phone;
 		this.cpf = cpf;
 		this.address = address;
+		this.passangerInfo = passangerInfo;
+		this.driverInfo = driverInfo;
 		return this;
 	}
 
@@ -118,7 +122,5 @@ public class User implements Serializable, UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-
-
 
 }

@@ -27,4 +27,9 @@ public class UserApplicationServices {
 		return userRepository.findByEmail(email);
 	}
 
+	public User update(final User user) {
+		
+		return userRepository.save(user);
+	}
+
 }

@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
 import br.com.gilberto.sgv.domain.user.DriverInfo;
-import br.com.gilberto.sgv.domain.user.PassangerInfo;
+import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

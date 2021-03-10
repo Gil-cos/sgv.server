@@ -2,6 +2,7 @@ package br.com.gilberto.sgv.endpoints;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,5 +26,11 @@ public class UserController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public JsonResponseWrapper create(@JsonDeserialize(using = UserDeserializer.class) final User user) {
 		return new JsonResponseWrapper(services.save(user));
+	}
+	
+	@PutMapping("/update")
+	@ResponseStatus(HttpStatus.CREATED)
+	public JsonResponseWrapper update(@JsonDeserialize(using = UserDeserializer.class) final User user) {
+		return new JsonResponseWrapper(services.update(user));
 	}
 }

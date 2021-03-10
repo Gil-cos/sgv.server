@@ -1,4 +1,4 @@
-package br.com.gilberto.sgv.domain.user;
+package br.com.gilberto.sgv.domain.user.passanger;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -41,5 +41,14 @@ public class PassangerInfo implements Serializable {
 	@ManyToMany(mappedBy="passangers")
 	private final Set<Route> routes = new HashSet<>();
 
+	public PassangerInfo(final Institution institution) {
+		this.institution = institution;
+	}
+
+	public PassangerInfo update(final Institution institution) {
+		this.institution = institution;
+		return this;
+	}
+	
 }
 

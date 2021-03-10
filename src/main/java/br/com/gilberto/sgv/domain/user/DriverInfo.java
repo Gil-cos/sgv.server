@@ -40,4 +40,14 @@ public class DriverInfo implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "driver")
 	private final Set<Route> routes = new HashSet<>();
+
+	public DriverInfo(final Vehicle vehicle) {
+		this.vehicle = vehicle;
+	}
+	
+	public DriverInfo update(final Vehicle vehicle) {
+		this.vehicle = vehicle;
+		return this;
+	}
+	
 }
