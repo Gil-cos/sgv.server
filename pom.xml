@@ -116,6 +116,44 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<property>
+					<name>!${env.PROFILE}</name>
+				</property>
+			</activation>
+			<properties>
+				<packaging.type>jar</packaging.type>
+				<profile>local</profile>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>dev</id>
+			<activation>
+				<property>
+					<name>env.PROFILE</name>
+					<value>dev</value>
+				</property>
+			</activation>
+			<build>
+				<defaultGoal>liquibase:update</defaultGoal>
+			</build>
+			<properties>
+				<packaging.type>war</packaging.type>
+				<liquibase.username>iiamvmpkcoqkid</liquibase.username>
+				<liquibase.password>cc847c2d4d2552bffd4d958cc2a6988569045664332fafa9482fa12b9d47ddcc
+				</liquibase.password>
+				<liquibase.url>jdbc:postgresql://ec2-18-214-208-89.compute-1.amazonaws.com:5432/d1j0inhj1298bl
+				</liquibase.url>
+				<profile>dev</profile>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>

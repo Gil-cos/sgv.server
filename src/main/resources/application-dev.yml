@@ -1,0 +1,36 @@
+spring:
+
+  mvc:
+    async:
+      request-timeout: 120000
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    hikari:
+      minimumIdle: 2
+      maximumPoolSize: 10
+      idleTimeout: 30000
+      maxLifetime: 2000000
+      connectionTimeout: 30000
+
+  liquibase:
+    change-log: classpath:db/changelog-master/db.changelog-master.xml
+    enabled: false
+
+  jpa:
+    open-in-view: true
+    repositories:
+    enabled: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      format_sql: false
+      ddl-auto: none
+    generate-ddl: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
