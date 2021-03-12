@@ -1,0 +1,6 @@
+--liquibase formatted sql
+
+--changeset gilbejun:001:
+ALTER TABLE SGV_USER ALTER COLUMN ADDRESS DROP NOT NULL;
+
+--rollback ALTER TABLE SGV_USER ALTER COLUMN ADDRESS SET NOT NULL;

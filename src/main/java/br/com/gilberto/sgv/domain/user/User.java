@@ -57,7 +57,7 @@ public class User implements Serializable, UserDetails {
 	private String password;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ADDRESS", nullable = false)
+	@JoinColumn(name = "ADDRESS", nullable = true)
 	private Address address;
 
 	@OneToOne(cascade = CascadeType.ALL)
