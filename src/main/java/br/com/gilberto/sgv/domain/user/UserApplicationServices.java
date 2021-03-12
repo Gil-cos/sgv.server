@@ -27,9 +27,10 @@ public class UserApplicationServices {
 		return userRepository.findByEmail(email);
 	}
 
+	@Transactional
 	public User update(final User user) {
-		
-		return userRepository.save(user);
+		final User userSaved = userRepository.save(user);
+		return userSaved;
 	}
 
 }

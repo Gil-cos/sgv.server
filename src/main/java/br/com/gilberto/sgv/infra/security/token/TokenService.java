@@ -35,7 +35,7 @@ public class TokenService {
 				.setIssuer("API ATM")
 				.setClaims(getClaims(user))
 				.setIssuedAt(date)
-				.setSubject(user.getEmail())
+				.setSubject(user.getId().toString())
 				.setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
@@ -45,6 +45,7 @@ public class TokenService {
         Map<String, Object> claims = new HashMap<>();
 
         claims.put(CLAIM_KEY_USERNAME, user.getUsername());
+        claims.put(CLAIM_KEY_ID, user.getId());
         claims.put(CLAIM_KEY_PROFILE, user.getRole().getRole());
 
         return claims;

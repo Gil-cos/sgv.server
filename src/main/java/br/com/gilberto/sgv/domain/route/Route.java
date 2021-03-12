@@ -20,7 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
-import br.com.gilberto.sgv.domain.user.DriverInfo;
+import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
 import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;

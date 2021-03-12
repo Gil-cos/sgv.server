@@ -9,9 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum Role implements GrantedAuthority {
 
-	ADMIN("WEB-CTE-0002"),
-	DRIVER("WEB-CTE"),
-	PASSANGER("WEB-CTE-0001"),
+	ADMIN("ADMIN"),
+	DRIVER("DRIVER"),
+	PASSANGER("PASSANGER"),
 	SYSTEM("SYSTEM");
 
 	private final String role;

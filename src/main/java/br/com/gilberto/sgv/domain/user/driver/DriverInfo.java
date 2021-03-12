@@ -1,4 +1,4 @@
-package br.com.gilberto.sgv.domain.user;
+package br.com.gilberto.sgv.domain.user.driver;
 
 import java.io.Serializable;
 import java.util.HashSet;

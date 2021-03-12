@@ -22,6 +22,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.gilberto.sgv.domain.address.Address;
+import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
 import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -72,13 +73,12 @@ public class User implements Serializable, UserDetails {
 	private Role role;
 
 	public User(final String name, final String phone, final String cpf, final String email, final String password,
-			final Address address, final Role role) {
+			final Role role) {
 		this.name = name;
 		this.phone = phone;
 		this.cpf = cpf;
 		this.email = email;
 		this.password = password;
-		this.address = address;
 		this.role = role;
 	}
 

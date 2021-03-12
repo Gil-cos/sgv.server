@@ -10,10 +10,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.com.gilberto.sgv.domain.address.Address;
-import br.com.gilberto.sgv.domain.user.DriverInfo;
 import br.com.gilberto.sgv.domain.user.Role;
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.UserRepository;
+import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
 import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
 import br.com.gilberto.sgv.infra.exception.NotFoundException;
 import lombok.AllArgsConstructor;
@@ -47,17 +47,31 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		final String password = encodePassword(getAsString("password", node));
 		final Address address = addressDeserializer.deserialize(node.get("address"));
 		final Role role = Role.valueOf(getAsString("role", node));
-		final PassangerInfo passangerInfo = passangerInfoDeserializer.deserialize(node.get("passangerInfo"));
-		final DriverInfo driverInfo = driverInfoDeserializer.deserialize(node.get("driverInfo"));
+		final PassangerInfo passangerInfo = deserializePassangerInfo(node);
+		final DriverInfo driverInfo = deserializeDriverInfo(node);
 
 		if (getId(node) == null) {
-			return new User(name, phone, cpf, email, password, address, role);
+			return new User(name, phone, cpf, email, password, role);
 		}
 
 		final User user = userRepository.findById(getId(node))
 				.orElseThrow(() -> new NotFoundException("User not found"));
 
 		return user.update(name, phone, cpf, address, passangerInfo, driverInfo);
+	}
+
+	private PassangerInfo deserializePassangerInfo(final JsonNode node) throws IOException {
+		if (isNodeNotNull(node.get("passangerInfo"))) {
+			return passangerInfoDeserializer.deserialize(node.get("passangerInfo"));
+		}
+		return null;
+	}
+	
+	private DriverInfo deserializeDriverInfo(final JsonNode node) throws IOException {
+		if (isNodeNotNull(node.get("driverInfo"))) {
+			return driverInfoDeserializer.deserialize(node.get("driverInfo"));
+		}
+		return null;
 	}
 
 	private String encodePassword(final String password) {
