@@ -45,7 +45,7 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		final String cpf = getAsString("cpf", node);
 		final String email = getAsString("email", node);
 		final String password = encodePassword(getAsString("password", node));
-		final Address address = addressDeserializer.deserialize(node.get("address"));
+		final Address address = deserializeAddress(node);
 		final Role role = Role.valueOf(getAsString("role", node));
 		final PassangerInfo passangerInfo = deserializePassangerInfo(node);
 		final DriverInfo driverInfo = deserializeDriverInfo(node);
@@ -60,13 +60,20 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		return user.update(name, phone, cpf, address, passangerInfo, driverInfo);
 	}
 
+	private Address deserializeAddress(final JsonNode node) throws IOException {
+		if (isNodeNotNull(node.get("address"))) {
+			return addressDeserializer.deserialize(node.get("address"));
+		}
+		return null;
+	}
+
 	private PassangerInfo deserializePassangerInfo(final JsonNode node) throws IOException {
 		if (isNodeNotNull(node.get("passangerInfo"))) {
 			return passangerInfoDeserializer.deserialize(node.get("passangerInfo"));
 		}
 		return null;
 	}
-	
+
 	private DriverInfo deserializeDriverInfo(final JsonNode node) throws IOException {
 		if (isNodeNotNull(node.get("driverInfo"))) {
 			return driverInfoDeserializer.deserialize(node.get("driverInfo"));
