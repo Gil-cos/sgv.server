@@ -13,7 +13,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.UserApplicationServices;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
 	
 	private TokenService tokenService;
@@ -39,6 +41,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
 	private void authenticateClient(final String token) {
 		Long idUsuario = tokenService.getUserId(token);
+		log.info("ID USUARIO: " + idUsuario);
 		User user = userService.findById(idUsuario).get();
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
