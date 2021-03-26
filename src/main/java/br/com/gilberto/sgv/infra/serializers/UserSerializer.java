@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import br.com.gilberto.sgv.domain.address.Address;
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
-import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
+import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 
 	private final AddressSerializer addressSerializer;
-	private final PassangerInfoSerializer passangerInfoSerializer;
+	private final PassangerInfoSerializer passengerInfoSerializer;
 	private final DriverInfoSerializer driverInfoSerializer;
 	
 	@Override
@@ -33,7 +33,7 @@ public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 		gen.writeStringField("email", value.getEmail());
 		gen.writeStringField("role", value.getRole().getRole());
 		serializeAddress(value.getAddress(), gen);
-		serializePassangerInfo(value.getPassangerInfo(), gen);
+		serializePassengerInfo(value.getPassengerInfo(), gen);
 		serializeDriverInfo(value.getDriverInfo(), gen);
 		gen.writeEndObject();
 	}
@@ -49,7 +49,7 @@ public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 		gen.writeStringField("email", value.getEmail());
 		gen.writeStringField("role", value.getRole().getRole());
 		serializeAddress(value.getAddress(), gen);
-		serializePassangerInfo(value.getPassangerInfo(), gen);
+		serializePassengerInfo(value.getPassengerInfo(), gen);
 		serializeDriverInfo(value.getDriverInfo(), gen);
 	}
 	
@@ -60,10 +60,10 @@ public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 		}
 	}
 	
-	public void serializePassangerInfo(final PassangerInfo passangerInfo, final JsonGenerator gen) throws IOException {
+	public void serializePassengerInfo(final PassengerInfo passangerInfo, final JsonGenerator gen) throws IOException {
 		if (passangerInfo != null) {
-			gen.writeFieldName("passangerInfo");
-			passangerInfoSerializer.serialize(passangerInfo, gen, null);
+			gen.writeFieldName("passengerInfo");
+			passengerInfoSerializer.serialize(passangerInfo, gen, null);
 		}
 	}
 	

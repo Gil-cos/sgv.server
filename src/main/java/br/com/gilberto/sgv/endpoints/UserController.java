@@ -1,6 +1,8 @@
 package br.com.gilberto.sgv.endpoints;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.UserApplicationServices;
 import br.com.gilberto.sgv.infra.deserializers.UserDeserializer;
 import br.com.gilberto.sgv.infra.wrappers.JsonResponseWrapper;
+import br.com.gilberto.sgv.infra.wrappers.UserWrapper;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -33,4 +36,9 @@ public class UserController {
 	public JsonResponseWrapper update(@JsonDeserialize(using = UserDeserializer.class) final User user) {
 		return new JsonResponseWrapper(services.update(user));
 	}
+	
+    @GetMapping("/me")
+    public UserWrapper get(final Authentication authentication) {
+        return new UserWrapper(services.findByEmail(authentication.getName()).get());
+    }
 }

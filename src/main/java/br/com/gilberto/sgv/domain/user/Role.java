@@ -11,7 +11,7 @@ public enum Role implements GrantedAuthority {
 
 	ADMIN("ADMIN"),
 	DRIVER("DRIVER"),
-	PASSANGER("PASSANGER"),
+	PASSENGER("PASSENGER"),
 	SYSTEM("SYSTEM");
 
 	private final String role;

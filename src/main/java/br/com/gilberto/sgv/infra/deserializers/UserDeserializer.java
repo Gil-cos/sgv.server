@@ -14,7 +14,7 @@ import br.com.gilberto.sgv.domain.user.Role;
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.UserRepository;
 import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
-import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
+import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
 import br.com.gilberto.sgv.infra.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -25,7 +25,7 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final AddressDeserializer addressDeserializer;
-	private final PassangerInfoDeserializer passangerInfoDeserializer;
+	private final PassengerInfoDeserializer passangerInfoDeserializer;
 	private final DriverInfoDeserializer driverInfoDeserializer;
 
 	@Override
@@ -47,7 +47,7 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		final String password = encodePassword(getAsString("password", node));
 		final Address address = deserializeAddress(node);
 		final Role role = Role.valueOf(getAsString("role", node));
-		final PassangerInfo passangerInfo = deserializePassangerInfo(node);
+		final PassengerInfo passangerInfo = deserializePassangerInfo(node);
 		final DriverInfo driverInfo = deserializeDriverInfo(node);
 
 		if (getId(node) == null) {
@@ -67,7 +67,7 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		return null;
 	}
 
-	private PassangerInfo deserializePassangerInfo(final JsonNode node) throws IOException {
+	private PassengerInfo deserializePassangerInfo(final JsonNode node) throws IOException {
 		if (isNodeNotNull(node.get("passangerInfo"))) {
 			return passangerInfoDeserializer.deserialize(node.get("passangerInfo"));
 		}

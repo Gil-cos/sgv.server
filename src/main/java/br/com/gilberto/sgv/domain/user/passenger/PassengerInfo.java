@@ -1,4 +1,4 @@
-package br.com.gilberto.sgv.domain.user.passanger;
+package br.com.gilberto.sgv.domain.user.passenger;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -24,28 +24,28 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "SGV_PASSANGER_INFO")
-public class PassangerInfo implements Serializable {
+@Table(name = "SGV_PASSENGER_INFO")
+public class PassengerInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "passanger_info_id_seq", sequenceName = "passanger_info_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passanger_info_id_seq")
+	@SequenceGenerator(name = "passenger_info_id_seq", sequenceName = "passenger_info_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passenger_info_id_seq")
 	private Long id;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "INSTITUTION", nullable = false)
 	private Institution institution;
 
-	@ManyToMany(mappedBy="passangers")
+	@ManyToMany(mappedBy="passengers")
 	private final Set<Route> routes = new HashSet<>();
 
-	public PassangerInfo(final Institution institution) {
+	public PassengerInfo(final Institution institution) {
 		this.institution = institution;
 	}
 
-	public PassangerInfo update(final Institution institution) {
+	public PassengerInfo update(final Institution institution) {
 		this.institution = institution;
 		return this;
 	}

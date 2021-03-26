@@ -1,8 +1,6 @@
-package br.com.gilberto.sgv.domain.user.passanger;
+package br.com.gilberto.sgv.domain.user.driver;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
 
 public interface DriverInfoRepository extends JpaRepository<DriverInfo, Long> {
 

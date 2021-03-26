@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
-import br.com.gilberto.sgv.domain.user.passanger.DriverInfoRepository;
+import br.com.gilberto.sgv.domain.user.driver.DriverInfoRepository;
 import br.com.gilberto.sgv.domain.vehicle.Vehicle;
 import br.com.gilberto.sgv.infra.exception.NotFoundException;
 import lombok.AllArgsConstructor;

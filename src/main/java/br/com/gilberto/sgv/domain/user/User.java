@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.gilberto.sgv.domain.address.Address;
 import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
-import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
+import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,8 +61,8 @@ public class User implements Serializable, UserDetails {
 	private Address address;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PASSANGER_INFO", nullable = true)
-	private PassangerInfo passangerInfo;
+	@JoinColumn(name = "PASSENGER_INFO", nullable = true)
+	private PassengerInfo passengerInfo;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "DRIVER_INFO", nullable = true)
@@ -83,12 +83,12 @@ public class User implements Serializable, UserDetails {
 	}
 
 	public User update(final String name, final String phone, final String cpf, final Address address,
-			final PassangerInfo passangerInfo, final DriverInfo driverInfo) {
+			final PassengerInfo passengerInfo, final DriverInfo driverInfo) {
 		this.name = name;
 		this.phone = phone;
 		this.cpf = cpf;
 		this.address = address;
-		this.passangerInfo = passangerInfo;
+		this.passengerInfo = passengerInfo;
 		this.driverInfo = driverInfo;
 		return this;
 	}

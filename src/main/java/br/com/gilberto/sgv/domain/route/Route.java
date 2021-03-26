@@ -21,7 +21,7 @@ import javax.persistence.Table;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
 import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
-import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
+import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,24 +51,24 @@ public class Route  implements Serializable {
 	private DriverInfo driver;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "SGV_ROUTE_PASSANGER", joinColumns = {
+	@JoinTable(name = "SGV_ROUTE_PASSENGER", joinColumns = {
 			@JoinColumn(name = "ID_ROUTE", nullable = false, referencedColumnName = "ID")}, inverseJoinColumns = {
-			@JoinColumn(name = "ID_PASSAGER", nullable = false, referencedColumnName = "ID")})
-	private final Set<PassangerInfo> passangers = new HashSet<>();
+			@JoinColumn(name = "ID_PASSEGER", nullable = false, referencedColumnName = "ID")})
+	private final Set<PassengerInfo> passengers = new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "INSTITUTION", nullable = false)
 	private Institution institution;
 	
 	
-	public void addPassanger(final PassangerInfo passanger) {
-		this.passangers.add(passanger);
-		passanger.getRoutes().add(this);
+	public void addPassenger(final PassengerInfo passenger) {
+		this.passengers.add(passenger);
+		passenger.getRoutes().add(this);
 	}
 	
-	public void removePassanger(final PassangerInfo passanger) {
-		this.passangers.remove(passanger);
-		passanger.getRoutes().remove(this);
+	public void removePassenger(final PassengerInfo passenger) {
+		this.passengers.remove(passenger);
+		passenger.getRoutes().remove(this);
 	}
 	
 	

@@ -8,17 +8,17 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
-import br.com.gilberto.sgv.domain.user.passanger.PassangerInfo;
+import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class PassangerInfoSerializer extends AbstractSerializer<PassangerInfo> {
+public class PassangerInfoSerializer extends AbstractSerializer<PassengerInfo> {
 
 	private final InstitutionSerializer institutionSerializer;
 
 	@Override
-	public void serialize(final PassangerInfo value, final JsonGenerator gen, final SerializerProvider serializers)
+	public void serialize(final PassengerInfo value, final JsonGenerator gen, final SerializerProvider serializers)
 			throws IOException {
 		gen.writeStartObject();
 		if (value.getId() != null) {
