@@ -20,8 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
-import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
-import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
+import br.com.gilberto.sgv.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,28 +47,36 @@ public class Route  implements Serializable {
 	
 	@ManyToOne()
 	@JoinColumn(name = "DRIVER", nullable = false)
-	private DriverInfo driver;
+	private User driver;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "SGV_ROUTE_PASSENGER", joinColumns = {
 			@JoinColumn(name = "ID_ROUTE", nullable = false, referencedColumnName = "ID")}, inverseJoinColumns = {
-			@JoinColumn(name = "ID_PASSEGER", nullable = false, referencedColumnName = "ID")})
-	private final Set<PassengerInfo> passengers = new HashSet<>();
+			@JoinColumn(name = "ID_USER", nullable = false, referencedColumnName = "ID")})
+	private final Set<User> passengers = new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "INSTITUTION", nullable = false)
 	private Institution institution;
 	
 	
-	public void addPassenger(final PassengerInfo passenger) {
-		this.passengers.add(passenger);
-		passenger.getRoutes().add(this);
+	public Route(final String description, final Period period, final User driver, final Institution institution) {
+		this.description = description;
+		this.period = period;
+		this.driver = driver;
+		this.institution = institution;
+	}	
+
+	public Route update(final String description, final Period period, final User driver, final Institution institution) {
+		this.description = description;
+		this.period = period;
+		this.driver = driver;
+		this.institution = institution;
+		return this;
 	}
-	
-	public void removePassenger(final PassengerInfo passenger) {
-		this.passengers.remove(passenger);
-		passenger.getRoutes().remove(this);
-	}
-	
-	
+
+	private void updatePassengers(final Set<User> passengers) {
+		this.passengers.clear();
+		this.passengers.addAll(passengers);
+	}	
 }

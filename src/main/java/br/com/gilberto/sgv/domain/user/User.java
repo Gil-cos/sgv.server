@@ -3,6 +3,8 @@ package br.com.gilberto.sgv.domain.user;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,6 +26,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.gilberto.sgv.domain.address.Address;
+import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.user.driver.DriverInfo;
 import br.com.gilberto.sgv.domain.user.passenger.PassengerInfo;
 import lombok.AccessLevel;
@@ -71,6 +76,12 @@ public class User implements Serializable, UserDetails {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ROLE", nullable = false)
 	private Role role;
+	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "driver")
+	private final Set<Route> ownerRoutes = new HashSet<>();
+	
+	@ManyToMany(mappedBy="passengers")
+	private final Set<Route> routes = new HashSet<>();
 
 	public User(final String name, final String phone, final String cpf, final String email, final String password,
 			final Role role) {

@@ -1,8 +1,6 @@
 package br.com.gilberto.sgv.domain.user.passenger;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,13 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
-import br.com.gilberto.sgv.domain.route.Route;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,10 +33,7 @@ public class PassengerInfo implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "INSTITUTION", nullable = false)
 	private Institution institution;
-
-	@ManyToMany(mappedBy="passengers")
-	private final Set<Route> routes = new HashSet<>();
-
+	
 	public PassengerInfo(final Institution institution) {
 		this.institution = institution;
 	}
@@ -49,6 +42,6 @@ public class PassengerInfo implements Serializable {
 		this.institution = institution;
 		return this;
 	}
-	
+
 }
 

@@ -1,8 +1,6 @@
 package br.com.gilberto.sgv.domain.user.driver;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,11 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.vehicle.Vehicle;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,9 +33,6 @@ public class DriverInfo implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "VEHICLE", nullable = false)
 	private Vehicle vehicle;
-	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "driver")
-	private final Set<Route> routes = new HashSet<>();
 
 	public DriverInfo(final Vehicle vehicle) {
 		this.vehicle = vehicle;
@@ -49,5 +42,4 @@ public class DriverInfo implements Serializable {
 		this.vehicle = vehicle;
 		return this;
 	}
-	
 }

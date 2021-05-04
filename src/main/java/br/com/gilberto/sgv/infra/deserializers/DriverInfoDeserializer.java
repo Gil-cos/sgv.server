@@ -36,7 +36,7 @@ public class DriverInfoDeserializer extends AbstractDeserializer<DriverInfo> {
 	
 	public DriverInfo deserialize(final JsonNode jsonNode) throws IOException {
 		
-		final Vehicle vehicle = vehicleDeserializer.deserialize(jsonNode.get("address"));
+		final Vehicle vehicle = vehicleDeserializer.deserialize(jsonNode.get("vehicle"));
 		
 		if (getId(jsonNode) == null) {
 			return new DriverInfo(vehicle);
