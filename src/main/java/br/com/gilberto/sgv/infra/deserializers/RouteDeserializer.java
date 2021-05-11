@@ -38,7 +38,7 @@ public class RouteDeserializer extends AbstractDeserializer<Route> {
 
 		final String description = getAsString("description", node);
 		final Period period = Period.valueOf(getAsString("period", node));
-		final User driver = userDeserializer.deserializerForRoute(getAsLong("driver", node));
+		final User driver = userDeserializer.deserializeNode(node.get("driver"), deserializationContext);
 		final Institution institution = institutionDeserializer.deserialize(node.get("institution"));
 //		final Set<User> passengers = deserializePassengers(node.get("passengers"), deserializationContext);
 

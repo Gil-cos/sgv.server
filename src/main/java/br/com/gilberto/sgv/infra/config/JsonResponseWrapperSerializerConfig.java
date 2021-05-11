@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 
+import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.user.User;
+import br.com.gilberto.sgv.infra.serializers.RouteSerializer;
 import br.com.gilberto.sgv.infra.serializers.UserSerializer;
 import br.com.gilberto.sgv.infra.util.SerializerFunctions;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class JsonResponseWrapperSerializerConfig {
 
 	private final UserSerializer userSerializer;
+	private final RouteSerializer routeSerializer;
 	
     @SuppressWarnings("rawtypes")
     @Bean
@@ -25,6 +28,7 @@ public class JsonResponseWrapperSerializerConfig {
         final Builder<Class, SerializerFunctions> builder = ImmutableMap.builder();
         return builder
         		.put(User.class, new SerializerFunctions<>(userSerializer::completeSerialize, userSerializer::simpleSerialize))
+        		.put(Route.class, new SerializerFunctions<>(routeSerializer::completeSerialize, routeSerializer::simpleSerialize))
                 .build();
     }
 }

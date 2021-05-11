@@ -85,8 +85,4 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		return password != null ? passwordEncoder.encode(password) : password;
 	}
 
-	public User deserializerForRoute(final Long id) {
-		return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User not found"));
-	}
-
 }

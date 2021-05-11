@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class PassangerInfoSerializer extends AbstractSerializer<PassengerInfo> {
+public class PassengerInfoSerializer extends AbstractSerializer<PassengerInfo> {
 
 	private final InstitutionSerializer institutionSerializer;
 

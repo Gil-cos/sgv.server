@@ -52,7 +52,7 @@ public class Route  implements Serializable {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "SGV_ROUTE_PASSENGER", joinColumns = {
 			@JoinColumn(name = "ID_ROUTE", nullable = false, referencedColumnName = "ID")}, inverseJoinColumns = {
-			@JoinColumn(name = "ID_USER", nullable = false, referencedColumnName = "ID")})
+			@JoinColumn(name = "ID_PASSENGER", nullable = false, referencedColumnName = "ID")})
 	private final Set<User> passengers = new HashSet<>();
 	
 	@ManyToOne(cascade = CascadeType.ALL)

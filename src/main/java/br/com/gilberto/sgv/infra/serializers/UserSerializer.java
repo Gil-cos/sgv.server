@@ -18,11 +18,11 @@ import lombok.RequiredArgsConstructor;
 public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 
 	private final AddressSerializer addressSerializer;
-	private final PassangerInfoSerializer passengerInfoSerializer;
+	private final PassengerInfoSerializer passengerInfoSerializer;
 	private final DriverInfoSerializer driverInfoSerializer;
 	
 	@Override
-	public void simpleSerialize(User value, JsonGenerator gen) throws IOException {
+	public void simpleSerialize(final User value, final JsonGenerator gen) throws IOException {
 		gen.writeStartObject();
 		if (value.getId() != null) {
 			gen.writeNumberField("id", value.getId());
@@ -39,7 +39,7 @@ public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 	}
 
 	@Override
-	public void completeSerialize(User value, JsonGenerator gen) throws IOException {
+	public void completeSerialize(final User value, final JsonGenerator gen) throws IOException {
 		if (value.getId() != null) {
 			gen.writeNumberField("id", value.getId());
 		}
