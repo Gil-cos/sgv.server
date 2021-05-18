@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.domain.user.UserApplicationServices;
+import br.com.gilberto.sgv.domain.user.UserFilter;
 import br.com.gilberto.sgv.infra.deserializers.UserDeserializer;
 import br.com.gilberto.sgv.infra.wrappers.JsonResponseWrapper;
 import br.com.gilberto.sgv.infra.wrappers.UserWrapper;
@@ -41,4 +42,9 @@ public class UserController {
     public UserWrapper get(final Authentication authentication) {
         return new UserWrapper(services.findByEmail(authentication.getName()).get());
     }
+    
+	@GetMapping("/pages")
+	public JsonResponseWrapper listAllPageable(final UserFilter filters) {
+		return new JsonResponseWrapper(services.findAll(filters), User.class);
+	}
 }

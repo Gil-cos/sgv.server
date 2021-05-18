@@ -75,8 +75,11 @@ public class Route  implements Serializable {
 		return this;
 	}
 
-	private void updatePassengers(final Set<User> passengers) {
-		this.passengers.clear();
-		this.passengers.addAll(passengers);
+	public void addPassenger(final User passenger) {
+		this.passengers.add(passenger);
+	}
+	
+	public void removePassenger(final User passenger) {
+		this.passengers.remove(passenger);
 	}	
 }

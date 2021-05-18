@@ -48,6 +48,28 @@ public abstract class BaseSpecification<T, U> {
 			return cb.or(predicates.toArray(new Predicate[values.size()]));
 		};
 	}
+	
+	protected <E> Specification<T> attributeNotContainsWithJoin(final String attributeJoin, final List<?> values, final String param) {
+		return (root, query, cb) -> {
+			if (CollectionUtils.isEmpty(values)) {
+				return null;
+			}
+			final Path<?> join = this.joinPath(attributeJoin, root);
+			final List<Predicate> predicates = new ArrayList<>();
+
+			final Object firstValue = values.get(0);
+			if (firstValue instanceof String) {
+				for (final Object value : values) {
+					predicates.add(cb.like(cb.lower(join.get(param)), this.containsLowerCase((String) value)));
+				}
+			} else {
+				for (final Object value : values) {
+					predicates.add(cb.equal(join.get(param), value));
+				}
+			}
+			return cb.or(predicates.toArray(new Predicate[values.size()])).not();
+		};
+	}
 
 	protected <E> Specification<T> attributeContainsWithGet(final String attributeJoin, final List<?> values, final String param) {
 		return (root, query, cb) -> {
@@ -135,6 +157,21 @@ public abstract class BaseSpecification<T, U> {
 			final List<Predicate> predicates = new ArrayList<>();
 			for (final Long value : values) {
 				predicates.add(cb.equal(root.get(attribute), value));
+			}
+
+			return cb.or(predicates.toArray(new Predicate[values.size()]));
+		};
+	}
+	
+	protected Specification<T> attributeNotEqualLong(final String attribute, final List<Long> values) {
+		return (root, query, cb) -> {
+			if (CollectionUtils.isEmpty(values)) {
+				return null;
+			}
+
+			final List<Predicate> predicates = new ArrayList<>();
+			for (final Long value : values) {
+				predicates.add(cb.notEqual(root.get(attribute), value));
 			}
 
 			return cb.or(predicates.toArray(new Predicate[values.size()]));

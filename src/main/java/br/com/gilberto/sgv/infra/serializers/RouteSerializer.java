@@ -40,6 +40,7 @@ public class RouteSerializer extends AbstractSimpleAndCompleteSerializer<Route> 
 			for (User user : passengers) {
 				userSerializer.simpleSerialize(user, gen);
 			}
+			gen.writeEndArray();
 		}
 	}
 
@@ -52,7 +53,6 @@ public class RouteSerializer extends AbstractSimpleAndCompleteSerializer<Route> 
 		userSerializer.simpleSerialize("driver", value.getDriver(), gen);
 		gen.writeStringField("period", value.getPeriod().name());
 		serializeInstitution(value.getInstitution(), gen);
-		serializePassengers(value.getPassengers(), gen);
 	}
 	
 	public void serializeInstitution(final Institution address, final JsonGenerator gen) throws IOException {
