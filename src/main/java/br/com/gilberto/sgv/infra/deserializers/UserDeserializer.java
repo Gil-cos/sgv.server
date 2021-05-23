@@ -45,13 +45,14 @@ public class UserDeserializer extends AbstractDeserializer<User> {
 		final String cpf = getAsString("cpf", node);
 		final String email = getAsString("email", node);
 		final String password = encodePassword(getAsString("password", node));
-		final Address address = deserializeAddress(node);
+		final String notificationToken = getAsString("notificationToken", node);
 		final Role role = Role.valueOf(getAsString("role", node));
+		final Address address = deserializeAddress(node);
 		final PassengerInfo passangerInfo = deserializePassangerInfo(node);
 		final DriverInfo driverInfo = deserializeDriverInfo(node);
 
 		if (getId(node) == null) {
-			return new User(name, phone, cpf, email, password, role);
+			return new User(name, phone, cpf, email, password, notificationToken, role);
 		}
 
 		final User user = userRepository.findById(getId(node))

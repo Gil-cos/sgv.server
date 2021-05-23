@@ -60,6 +60,9 @@ public class User implements Serializable, UserDetails {
 
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
+	
+	@Column(name = "NOTIFICATION_TOKEN", nullable = false)
+	private String notificationToken;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS", nullable = true)
@@ -84,12 +87,13 @@ public class User implements Serializable, UserDetails {
 	private final Set<Route> routes = new HashSet<>();
 
 	public User(final String name, final String phone, final String cpf, final String email, final String password,
-			final Role role) {
+			final String notificationToken, final Role role) {
 		this.name = name;
 		this.phone = phone;
 		this.cpf = cpf;
 		this.email = email;
 		this.password = password;
+		this.notificationToken = notificationToken;
 		this.role = role;
 	}
 

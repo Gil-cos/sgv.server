@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.route.RouteApplicationServices;
 import br.com.gilberto.sgv.domain.route.RouteFilter;
+import br.com.gilberto.sgv.domain.route.RouteStatus;
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.infra.deserializers.RouteDeserializer;
 import br.com.gilberto.sgv.infra.wrappers.JsonResponseWrapper;
@@ -55,5 +56,15 @@ public class RouteController {
 	@PutMapping("{routeId}/passengers/remove/{passengerId}")
 	public JsonResponseWrapper removePassenger(@PathVariable("routeId") final Long routeId, @PathVariable("passengerId") final Long passengerId) {
 		return new JsonResponseWrapper(services.removePassenger(routeId, passengerId), Route.class);
+	}
+	
+	@PutMapping("{routeId}/passengers/confirm/{passengerId}")
+	public JsonResponseWrapper comfirmPassenger(@PathVariable("routeId") final Long routeId, @PathVariable("passengerId") final Long passengerId) {
+		return new JsonResponseWrapper(services.comfirmPassenger(routeId, passengerId), Route.class);
+	}
+	
+	@PutMapping("{id}/status/{status}")
+	public JsonResponseWrapper changeStatus(@PathVariable("id") final Long routeId, @PathVariable("status") final RouteStatus status) {
+		return new JsonResponseWrapper(services.changeStatus(routeId, status), Route.class);
 	}
 }

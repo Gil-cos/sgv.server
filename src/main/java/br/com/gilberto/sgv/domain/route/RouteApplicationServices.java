@@ -53,4 +53,18 @@ public class RouteApplicationServices {
 		route.removePassenger(userApplicationServices.findById(passengerId));
 		return route;
 	}
+	
+	@Transactional
+	public Route comfirmPassenger(final Long routeId, final Long passengerId) {
+		final Route route = findById(routeId);
+		route.comfirmPassenger(userApplicationServices.findById(passengerId));
+		return route;
+	}
+
+	@Transactional
+	public Route changeStatus(final Long id, final RouteStatus status) {
+		final Route route = findById(id);
+		route.updateStatus(status);
+		return route;
+	}
 }
