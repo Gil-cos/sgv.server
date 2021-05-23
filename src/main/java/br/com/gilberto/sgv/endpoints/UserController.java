@@ -17,9 +17,12 @@ import br.com.gilberto.sgv.domain.user.UserFilter;
 import br.com.gilberto.sgv.infra.deserializers.UserDeserializer;
 import br.com.gilberto.sgv.infra.wrappers.JsonResponseWrapper;
 import br.com.gilberto.sgv.infra.wrappers.UserWrapper;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 
 @RestController
+@Api(value = "Usuários")
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
@@ -28,22 +31,26 @@ public class UserController {
 	
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value = "Cria um novo Usuário")
 	public JsonResponseWrapper create(@JsonDeserialize(using = UserDeserializer.class) final User user) {
 		return new JsonResponseWrapper(services.save(user));
 	}
 	
 	@PutMapping("/update")
 	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value = "Atualiza um Usuário")
 	public JsonResponseWrapper update(@JsonDeserialize(using = UserDeserializer.class) final User user) {
 		return new JsonResponseWrapper(services.update(user));
 	}
 	
     @GetMapping("/me")
+    @ApiOperation(value = "Busca as informações do Usuário")
     public UserWrapper get(final Authentication authentication) {
         return new UserWrapper(services.findByEmail(authentication.getName()).get());
     }
     
 	@GetMapping("/pages")
+	@ApiOperation(value = "Lista todos os Usuários")
 	public JsonResponseWrapper listAllPageable(final UserFilter filters) {
 		return new JsonResponseWrapper(services.findAll(filters), User.class);
 	}

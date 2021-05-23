@@ -26,6 +26,15 @@ import br.com.gilberto.sgv.infra.security.token.TokenService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
+    private static final String[] AUTH_WHITELIST = {
+
+            // -- swagger ui
+            "/swagger-resources/**",
+            "/swagger-ui.html",
+            "/v2/api-docs",
+            "/webjars/**"
+    };
+	
 	@Autowired
 	private AuthService authService;
 	
@@ -58,6 +67,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/api/auth").permitAll()
 		.antMatchers(HttpMethod.POST, "/users/create").permitAll()
+		.antMatchers(AUTH_WHITELIST).permitAll()
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
