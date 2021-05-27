@@ -8,9 +8,8 @@ import lombok.Getter;
 public enum RouteStatus {
 	
 	STAND_BY(""),
-	PREPARING("Preparando"),
-	GOING("Indo até o destino"),
-	RETURNING("Voltando para casa");
+	PREPARING("Em Preparação"),
+	TRAVELING("Em Viagem");
 	
 	private final String prettyName;
 }

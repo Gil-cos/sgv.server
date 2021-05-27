@@ -1,7 +1,6 @@
 package br.com.gilberto.sgv.infra.serializers;
 
 import java.io.IOException;
-import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
@@ -10,7 +9,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.com.gilberto.sgv.domain.institution.Institution;
 import br.com.gilberto.sgv.domain.route.Route;
-import br.com.gilberto.sgv.domain.user.User;
 import lombok.RequiredArgsConstructor;
 
 @Component
@@ -33,17 +31,6 @@ public class RouteSerializer extends AbstractSimpleAndCompleteSerializer<Route> 
 		gen.writeEndObject();
 	}
 
-	private void serializePassengers(Set<User> passengers, JsonGenerator gen) throws IOException {
-		if (!passengers.isEmpty()) {
-			gen.writeFieldName("passengers");
-			gen.writeStartArray();
-			for (User user : passengers) {
-				userSerializer.simpleSerialize(user, gen);
-			}
-			gen.writeEndArray();
-		}
-	}
-
 	@Override
 	public void completeSerialize(final Route value, final JsonGenerator gen) throws IOException {
 		if (value.getId() != null) {
@@ -52,6 +39,7 @@ public class RouteSerializer extends AbstractSimpleAndCompleteSerializer<Route> 
 		gen.writeStringField("description", value.getDescription());
 		userSerializer.simpleSerialize("driver", value.getDriver(), gen);
 		gen.writeStringField("period", value.getPeriod().name());
+		gen.writeStringField("status", value.getStatus().name());
 		serializeInstitution(value.getInstitution(), gen);
 	}
 	

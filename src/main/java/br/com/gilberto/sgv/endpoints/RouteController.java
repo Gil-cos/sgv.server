@@ -13,11 +13,10 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.route.RouteApplicationServices;
-import br.com.gilberto.sgv.domain.route.RouteFilter;
 import br.com.gilberto.sgv.domain.route.RouteStatus;
-import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.infra.deserializers.RouteDeserializer;
 import br.com.gilberto.sgv.infra.wrappers.JsonResponseWrapper;
+import br.com.gilberto.sgv.infra.wrappers.PassengersWrapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -43,16 +42,16 @@ public class RouteController {
 		return new JsonResponseWrapper(services.findById(id));
 	}
 	
-	@GetMapping("/pages")
-	@ApiOperation(value = "Lista as Rotas de acordo com o filtro")
-	public JsonResponseWrapper listAllPageable(final RouteFilter filters) {
-		return new JsonResponseWrapper(services.findAll(filters), Route.class);
+	@GetMapping("/{userId}/user")
+	@ApiOperation(value = "Lista as Rotas de acordo com a Role")
+	public JsonResponseWrapper listAll(@PathVariable("userId") final Long userId) {
+		return new JsonResponseWrapper(services.findAll(userId), Route.class);
 	}
 	
 	@GetMapping("/passengers/{id}")
 	@ApiOperation(value = "Lista os Passageiros de uma Rota")
-	public JsonResponseWrapper listPassengers(@PathVariable("id") final Long id) {
-		return new JsonResponseWrapper(services.getPassengers(id), User.class);
+	public PassengersWrapper listPassengers(@PathVariable("id") final Long id) {
+		return new PassengersWrapper(id);
 	}
 	
 	@PutMapping("{routeId}/passengers/add/{passengerId}")

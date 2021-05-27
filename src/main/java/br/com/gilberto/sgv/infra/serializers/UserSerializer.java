@@ -32,6 +32,7 @@ public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 		gen.writeStringField("cpf", value.getCpf());
 		gen.writeStringField("email", value.getEmail());
 		gen.writeStringField("role", value.getRole().getRole());
+		gen.writeStringField("notificationToken", value.getNotificationToken());
 		serializeAddress(value.getAddress(), gen);
 		serializePassengerInfo(value.getPassengerInfo(), gen);
 		serializeDriverInfo(value.getDriverInfo(), gen);
@@ -48,6 +49,7 @@ public class UserSerializer extends AbstractSimpleAndCompleteSerializer<User> {
 		gen.writeStringField("cpf", value.getCpf());
 		gen.writeStringField("email", value.getEmail());
 		gen.writeStringField("role", value.getRole().getRole());
+		gen.writeStringField("notificationToken", value.getNotificationToken());
 		serializeAddress(value.getAddress(), gen);
 		serializePassengerInfo(value.getPassengerInfo(), gen);
 		serializeDriverInfo(value.getDriverInfo(), gen);

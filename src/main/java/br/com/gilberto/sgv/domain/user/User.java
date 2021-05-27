@@ -138,4 +138,8 @@ public class User implements Serializable, UserDetails {
 		return true;
 	}
 
+	public boolean isDriver() {
+		return this.role.equals(Role.DRIVER);
+	}
+
 }

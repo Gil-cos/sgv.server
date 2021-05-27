@@ -1,11 +1,9 @@
 package br.com.gilberto.sgv.domain.route;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import br.com.gilberto.sgv.domain.user.User;
@@ -19,7 +17,6 @@ public class RouteApplicationServices {
 
 	private final RouteRepository routeRepository;
 	private final UserApplicationServices userApplicationServices;
-	private final RouteSpecification routeSpecification;
 
 	@Transactional
 	public Route save(final Route route) {
@@ -30,14 +27,14 @@ public class RouteApplicationServices {
 		return routeRepository.findById(id).orElseThrow(() -> new NotFoundException("Route not found'"));
 	}
 	
-	public List<Route> findAll(final RouteFilter filters) {
-		final Specification<Route> specification = routeSpecification.toSpecification(filters);
-		return routeRepository.findAll(specification);
+	public Set<Route> findAll(final Long userId) {
+		final User user = userApplicationServices.findById(userId);
+		return user.isDriver() ? user.getOwnerRoutes() : user.getRoutes();
 	}
 
-	public Set<User> getPassengers(final Long id) {
+	public Set<User> getConfirmedPassengers(final Long id) {
 		final Route route = findById(id);
-		return route.getPassengers();
+		return route.getConfirmedPassengers();
 	}
 
 	@Transactional
