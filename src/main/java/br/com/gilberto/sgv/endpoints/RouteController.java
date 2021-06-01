@@ -66,12 +66,6 @@ public class RouteController {
 		return new JsonResponseWrapper(services.removePassenger(routeId, passengerId), Route.class);
 	}
 	
-	@PutMapping("{routeId}/passengers/confirm/{passengerId}")
-	@ApiOperation(value = "Confirma a presença de um Passageiro a uma Rota")
-	public JsonResponseWrapper comfirmPassenger(@PathVariable("routeId") final Long routeId, @PathVariable("passengerId") final Long passengerId) {
-		return new JsonResponseWrapper(services.comfirmPassenger(routeId, passengerId), Route.class);
-	}
-	
 	@PutMapping("{id}/status/{status}")
 	@ApiOperation(value = "Muda o status da Rota")
 	public JsonResponseWrapper changeStatus(@PathVariable("id") final Long routeId, @PathVariable("status") final RouteStatus status) {

@@ -59,12 +59,6 @@ public class Route  implements Serializable {
 			@JoinColumn(name = "ID_PASSENGER", nullable = false, referencedColumnName = "ID")})
 	private final Set<User> passengers = new HashSet<>();
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "SGV_CONFIRMED_PASSENGERS", joinColumns = {
-			@JoinColumn(name = "ID_ROUTE", nullable = false, referencedColumnName = "ID")}, inverseJoinColumns = {
-			@JoinColumn(name = "ID_PASSENGER", nullable = false, referencedColumnName = "ID")})
-	private final Set<User> confirmedPassengers = new HashSet<>();
-	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "INSTITUTION", nullable = false)
 	private Institution institution;
@@ -94,14 +88,6 @@ public class Route  implements Serializable {
 		this.passengers.remove(passenger);
 	}
 	
-	public void comfirmPassenger(final User passenger) {
-		this.confirmedPassengers.add(passenger);
-	}
-	
-	public void clearConfirmedPassengers() {
-		this.passengers.clear();
-	}
-
 	public void updateStatus(final RouteStatus status) {
 		this.status = status;		
 	}

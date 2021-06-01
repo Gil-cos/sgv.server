@@ -32,15 +32,11 @@ public class RouteApplicationServices {
 		return user.isDriver() ? user.getOwnerRoutes() : user.getRoutes();
 	}
 
-	public Set<User> getConfirmedPassengers(final Long id) {
-		final Route route = findById(id);
-		return route.getConfirmedPassengers();
-	}
-
 	@Transactional
 	public Route addPassenger(final Long routeId, final Long passengerId) {
 		final Route route = findById(routeId);
-		route.addPassenger(userApplicationServices.findById(passengerId));
+		final User passenger = userApplicationServices.findById(passengerId);
+		route.addPassenger(passenger);
 		return route;
 	}
 	
@@ -51,13 +47,6 @@ public class RouteApplicationServices {
 		return route;
 	}
 	
-	@Transactional
-	public Route comfirmPassenger(final Long routeId, final Long passengerId) {
-		final Route route = findById(routeId);
-		route.comfirmPassenger(userApplicationServices.findById(passengerId));
-		return route;
-	}
-
 	@Transactional
 	public Route changeStatus(final Long id, final RouteStatus status) {
 		final Route route = findById(id);

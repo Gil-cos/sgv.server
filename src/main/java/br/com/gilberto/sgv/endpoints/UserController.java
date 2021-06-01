@@ -3,6 +3,7 @@ package br.com.gilberto.sgv.endpoints;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,5 +54,23 @@ public class UserController {
 	@ApiOperation(value = "Lista todos os Usuários")
 	public JsonResponseWrapper listAllPageable(final UserFilter filters) {
 		return new JsonResponseWrapper(services.findAll(filters), User.class);
+	}
+	
+	@PutMapping("{passengerId}/passengers/confirm-presence/{routeId}")
+	@ApiOperation(value = "Confirma a presença de um Passageiro a uma Rota")
+	public JsonResponseWrapper comfirmPresence(@PathVariable("passengerId") final Long passengerId, @PathVariable("routeId") final Long routeId) {
+		return new JsonResponseWrapper(services.comfirmPresence(routeId, passengerId), User.class);
+	}
+	
+	@PutMapping("{passengerId}/passengers/decline-presence/{routeId}")
+	@ApiOperation(value = "Confirma a presença de um Passageiro a uma Rota")
+	public JsonResponseWrapper declinePresence(@PathVariable("passengerId") final Long passengerId, @PathVariable("routeId") final Long routeId) {
+		return new JsonResponseWrapper(services.declinePresence(routeId, passengerId), User.class);
+	}
+	
+	@PutMapping("{passengerId}/passengers/clear-confirmation/{routeId}")
+	@ApiOperation(value = "Confirma a presença de um Passageiro a uma Rota")
+	public JsonResponseWrapper clearConfirmation(@PathVariable("passengerId") final Long passengerId, @PathVariable("routeId") final Long routeId) {
+		return new JsonResponseWrapper(services.clearConfirmation(routeId, passengerId), User.class);
 	}
 }

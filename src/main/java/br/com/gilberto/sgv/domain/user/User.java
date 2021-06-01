@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -83,6 +84,9 @@ public class User implements Serializable, UserDetails {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "driver")
 	private final Set<Route> ownerRoutes = new HashSet<>();
 	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "passenger")
+	private final Set<PresenceConfirmation> presenceConfirmations = new HashSet<>();
+	
 	@ManyToMany(mappedBy="passengers")
 	private final Set<Route> routes = new HashSet<>();
 
@@ -140,6 +144,29 @@ public class User implements Serializable, UserDetails {
 
 	public boolean isDriver() {
 		return this.role.equals(Role.DRIVER);
+	}
+
+	public void confirmPresence(final Route route) {
+		clearPresenceConfirmation(route);
+		this.presenceConfirmations.add(PresenceConfirmation.builder()
+				.corfimed(true)
+				.passenger(this)
+				.route(route)
+				.build());
+	}
+	
+	public void declinePresence(final Route route) {
+		clearPresenceConfirmation(route);
+		this.presenceConfirmations.add(PresenceConfirmation.builder()
+				.corfimed(false)
+				.passenger(this)
+				.route(route)
+				.build());
+	}
+
+	public void clearPresenceConfirmation(final Route route) {
+		Optional<PresenceConfirmation> optional = this.presenceConfirmations.stream().filter(p -> p.getRoute().getId().equals(route.getId())).findFirst();
+		optional.ifPresent(o -> this.presenceConfirmations.remove(o));
 	}
 
 }

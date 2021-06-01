@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 
 import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.route.RouteRepository;
+import br.com.gilberto.sgv.domain.user.PresenceConfirmation;
 import br.com.gilberto.sgv.domain.user.User;
 import br.com.gilberto.sgv.infra.exception.NotFoundException;
 import br.com.gilberto.sgv.infra.wrappers.PassengersWrapper;
@@ -32,20 +33,24 @@ public class PassengersWrapperSerializer extends AbstractSerializer<PassengersWr
 		serializePassengers(route, gen);
 	}
 
-	private void serializePassengers(final Route value, final JsonGenerator gen) throws IOException {
+	private void serializePassengers(final Route route, final JsonGenerator gen) throws IOException {
 		gen.writeStartArray();
-		for (final User passenger : value.getPassengers()) {
+		for (final User passenger : route.getPassengers()) {
 			gen.writeStartObject();
 			userSerializer.completeSerialize(passenger, gen);
-			gen.writeBooleanField("isConfirmed", getPassengerConfirmation(value, passenger));
+			getPassengerConfirmation(route, passenger, gen);
 			gen.writeEndObject();
 		}
 		gen.writeEndArray();
 	}
 
-	private boolean getPassengerConfirmation(final Route route, final User passenger) {
-		final Optional<User> optional = route.getConfirmedPassengers().stream()
-				.filter(p -> p.getId().equals(passenger.getId())).findAny();
-		return optional.isPresent();
+	private void getPassengerConfirmation(final Route route, final User passenger, final JsonGenerator gen) throws IOException {
+		final Optional<PresenceConfirmation> optional = passenger.getPresenceConfirmations().stream()
+				.filter(p -> p.getRoute().equals(route)).findAny();
+		if (optional.isPresent()) {
+			gen.writeBooleanField("isConfirmed", optional.get().isCorfimed());		
+		} else {
+			gen.writeNullField("isConfirmed");
+		}
 	}
 }
