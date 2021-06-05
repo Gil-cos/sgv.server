@@ -27,6 +27,7 @@ public class RouteSerializer extends AbstractSimpleAndCompleteSerializer<Route> 
 		gen.writeStringField("description", value.getDescription());
 		userSerializer.simpleSerialize("driver", value.getDriver(), gen);
 		gen.writeStringField("period", value.getPeriod().name());
+		gen.writeStringField("sharedLocationLink", value.getSharedLocationLink());
 		serializeInstitution(value.getInstitution(), gen);
 		gen.writeEndObject();
 	}
@@ -40,6 +41,7 @@ public class RouteSerializer extends AbstractSimpleAndCompleteSerializer<Route> 
 		userSerializer.simpleSerialize("driver", value.getDriver(), gen);
 		gen.writeStringField("period", value.getPeriod().name());
 		gen.writeStringField("status", value.getStatus().name());
+		gen.writeStringField("sharedLocationLink", value.getSharedLocationLink());
 		serializeInstitution(value.getInstitution(), gen);
 	}
 	

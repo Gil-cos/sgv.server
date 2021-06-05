@@ -53,4 +53,10 @@ public class RouteApplicationServices {
 		route.updateStatus(status);
 		return route;
 	}
+
+	@Transactional
+	public void saveSharedLocationLink(final Long routeId, final String sharedLocationLink) {
+		final Route route = findById(routeId);
+		route.updateLink(sharedLocationLink);
+	}
 }

@@ -49,6 +49,9 @@ public class Route  implements Serializable {
 	@Column(name = "STATUS", nullable = false)
 	private RouteStatus status;
 	
+	@Column(name = "SHARED_LOCATION_LINK", nullable = true)
+	private String sharedLocationLink;
+	
 	@ManyToOne()
 	@JoinColumn(name = "DRIVER", nullable = false)
 	private User driver;
@@ -89,6 +92,17 @@ public class Route  implements Serializable {
 	}
 	
 	public void updateStatus(final RouteStatus status) {
+		if (status.equals(RouteStatus.STAND_BY)) {
+			clearSharedLocationLink();
+		}
 		this.status = status;		
+	}
+
+	private void clearSharedLocationLink() {
+		this.sharedLocationLink = null;
+	}
+
+	public void updateLink(String sharedLocationLink) {
+		this.sharedLocationLink = sharedLocationLink;
 	}
 }

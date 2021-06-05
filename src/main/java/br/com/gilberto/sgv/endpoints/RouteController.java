@@ -5,12 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import br.com.gilberto.sgv.infra.wrappers.SingleValueWrapper;
 import br.com.gilberto.sgv.domain.route.Route;
 import br.com.gilberto.sgv.domain.route.RouteApplicationServices;
 import br.com.gilberto.sgv.domain.route.RouteStatus;
@@ -58,6 +60,12 @@ public class RouteController {
 	@ApiOperation(value = "Adiciona um Passageiro a uma Rota")
 	public JsonResponseWrapper addPassenger(@PathVariable("routeId") final Long routeId, @PathVariable("passengerId") final Long passengerId) {
 		return new JsonResponseWrapper(services.addPassenger(routeId, passengerId), Route.class);
+	}
+	
+	@PutMapping("{routeId}/link")
+	@ApiOperation(value = "Adiciona um Passageiro a uma Rota")
+	public void saveSharedLocationLink(@PathVariable("routeId") final Long routeId, @RequestBody final SingleValueWrapper wrapper) {
+		services.saveSharedLocationLink(routeId, wrapper.getValue().toString());
 	}
 	
 	@PutMapping("{routeId}/passengers/remove/{passengerId}")
